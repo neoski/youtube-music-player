@@ -3,7 +3,7 @@ Angular5 module. Create a music player with youtube links and control it.
 
 **Usage :**
 
-1. Add youtube API `<script src="https://www.youtube.com/iframe_api"></script>` in your `index.html`.
+1. Add youtube API `<script src="https://www.youtube.com/iframe_api"></script>` in your `index.html`
 
 2. Run `npm install youtube-music-player --save` in the root of your application
 
