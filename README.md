@@ -1,5 +1,5 @@
 # youtube-music-player
-Angular5 module. Create a music player with youtube links and control it.
+Create a music player with youtube links and control it (Angular5 module).
 
 **Usage :**
 
