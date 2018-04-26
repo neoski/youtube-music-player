@@ -49,5 +49,13 @@ Example :
 
 `urlsToIds(playlist: string[])` : converts an array of youtube links to an array of youtube video ids
 
+**Notes :**
+
+If you have troubles with the player because it stays in a loading state. 
+
+1. Make sure you have correctly included the youtube API `<script src="https://www.youtube.com/iframe_api"></script>` in your `index.html` 
+
+2. Reload manually the page.
+
 Author : Sebastien S.
 Github repository : https://github.com/neoski/youtube-music-player
