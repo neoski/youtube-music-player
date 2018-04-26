@@ -35,7 +35,7 @@ Example :
 `autoplay` // autostart the playlist ? (default : `0`, can be set to `1`)
 `index` // position on the playlist (default : `0`)
 
-** Methods on `YoutubeMusicPlayerService` to control the player : **
+**Methods on `YoutubeMusicPlayerService` to control the player :**
 
 `getErrorSub()` : returns a `BehaviorSubject` that you should subscribe, it will set a value `> 0` if an error occurs describing the error flag on youtube's API.
 
