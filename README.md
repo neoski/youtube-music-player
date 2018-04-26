@@ -1,7 +1,7 @@
 # youtube-music-player
 Create a music player with youtube links and control it (Angular5 module).
 
-<img src="https://github.com/neoski/youtube-music-player/blob/master/ymp.png?raw=true"/>
+<img src="https://github.com/neoski/youtube-music-player/blob/master/ymp.png"/>
 
 **Usage :**
 
