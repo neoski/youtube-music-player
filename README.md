@@ -31,8 +31,11 @@ Example :
 `let playlist = this.ympService.urlsToIds(['https://www.youtube.com/watch?v=cTn288M5Mak', 'https://www.youtube.com/watch?v=3dm_5qWWDV8']);`
 
 **Possible Inputs on `<app youtube-music-player></app-youtube-music-player>` : **
+
 `playlist` // the array of strings containing your video ids
+
 `autoplay` // autostart the playlist ? (default : `0`, can be set to `1`)
+
 `index` // position on the playlist (default : `0`)
 
 **Methods on `YoutubeMusicPlayerService` to control the player :**
