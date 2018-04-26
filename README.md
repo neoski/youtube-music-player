@@ -58,4 +58,5 @@ If you have troubles with the player because it stays in a loading state.
 2. Reload manually the page.
 
 Author : Sebastien S.
+
 Github repository : https://github.com/neoski/youtube-music-player
