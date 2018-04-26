@@ -1,0 +1,129 @@
+div#ymp .hidden {
+	visibility: hidden;
+}
+
+div#ymp {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	width: 100%;
+	height: 17px;
+	background-color: #000;
+	color: #FFF;
+	line-height: 14px;
+    font-size: 10px;
+	padding-bottom: 4px;
+	display: inline-flex;
+}
+
+div#ymp div#ympPrevious, div#ymp div#ympNext{
+	position: relative;
+	top: 2px;
+	font-size: 12px;
+	cursor: pointer;
+	font-weight: bold;
+	padding-left: 4px;
+}
+
+div#ympLeftPart {
+	padding-top: 3px;
+    padding-left: 2px;
+    display: flex;
+}
+
+div#ympRightPart {
+	padding-left: 10px;
+    padding-right: 10px;
+    float: right;
+    display: flex;
+}
+
+div#ymp #ympPlay div {
+	font-size: 10px;
+	position: relative;
+	top: 0px;
+	cursor: pointer;
+	padding-top: 1px;
+}
+
+div#ymp #ympPlay {
+	margin-left: 5px;
+	display: inline-block;
+	width: 9px;
+}
+
+div#ymp #ympLoading {
+	position: relative;
+	top: 2px;
+	left: 14px;
+}
+div#ymp #ympLoading img {
+	height: 15px;
+	width: 15px;
+}
+
+div#ymp div#ympTitle, div#ymp div#ympError {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 1px;
+	display: inline-block;
+    white-space: nowrap;
+}
+
+div#ympBar {
+	position: relative;
+	width: 100%;
+	border: 1px solid #fff;
+	height: 5px;
+	background-color: #333;
+	overflow: hidden;
+	margin-top: 6.5px;
+	display: inline-flex;
+}
+
+
+div#ymp div.ympBuffered {
+	z-index: 1;
+	position: absolute;
+	background-color: #666;
+	width: 0%;
+	height: 5px;
+}
+
+div#ymp #ympProgress {
+	z-index: 2;
+	position: absolute;
+	width: 2px;
+	height: 4px;
+	border: 1px solid #fff;
+	background-color: #fff;
+}
+
+div#ymp #soundBar {
+	z-index: 1;
+	position: relative;
+	display: inline-block;
+	width: 100px;
+	background-color: #000;;
+	overflow: hidden;
+	top: 2px;
+	margin-left: 5px;
+}
+
+div#ymp #soundValue {
+	z-index: 2;
+	left: 50%;
+	position: absolute;
+	width: 3px;
+	height: 4px;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	background-color: #fff;
+}
+
+div#ymp div#ympTime {
+	padding-top: 4px;
+    padding-right: 4px;
+}
+
+div#ymp .hidden {
+    display: none !important;
+}

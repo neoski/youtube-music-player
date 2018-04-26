@@ -1,0 +1,24 @@
+<div id="ymp" #ymp>
+  <div id="ympLeftPart">
+    <div id="ympPrevious" class="hidden" #ympPrevious (click)="previousSong()">↩</div>
+    <div id="ympLoading" #ympLoading>
+      ...
+    </div>
+    <div id="ympPlay">
+      <div id="buttonPause" class="hidden" (click)="pauseVideo()" #buttonPause>◼</div>
+      <div id="buttonPlay" class="hidden" (click)="playVideo()" #buttonPlay>▶</div>
+    </div>
+    <div id="ympNext" class="hidden" #ympNext (click)="nextSong()">↪</div>
+    <div id="ympTitle" #ympTitle></div>
+    <div id="ympError" class="hidden" #ympError></div>
+  </div>
+  <div id="ympBar" #ympBar (click)="changePosition($event)">
+      <div id="ympProgress" #ympProgress></div>
+      <div id="ympBuffered" #ympBuffered></div>
+  </div>
+  <div id="ympRightPart">
+      <div id="ympTime" #ympTime>00:00|00:00</div>
+      <input type="range" id="soundBar" #soundBar (change)=setVolume()/>
+      <div class="hidden" id="youtubeVideo"></div>
+  </div>
+</div>
