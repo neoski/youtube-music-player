@@ -17,7 +17,7 @@ Angular5 module. Create a music player with youtube links and control it.
 
 1. `import { YoutubeMusicPlayerService } from 'youtube-music-player';` in your component using it
 
-2. Assign the service in your component : `constructor([...], private ympService: YoutubeMusicPlayerService) [...]`
+2. Assign the service in your component : `constructor([...], private ympService: YoutubeMusicPlayerService)`
 
 3. You can now interact with the youtube music player (e.g : `this.ympService.setPlaylist(playlist);`)
 
