@@ -32,11 +32,11 @@ Example :
 
 **Possible Inputs on `<app youtube-music-player></app-youtube-music-player>` : **
 
-`playlist` // the array of strings containing your video ids
+`playlist` : the array of strings containing your video ids
 
-`autoplay` // autostart the playlist ? (default : `0`, can be set to `1`)
+`autoplay` : autostart the playlist ? (default : `0`, can be set to `1`)
 
-`index` // position on the playlist (default : `0`)
+`index` : position on the playlist (default : `0`)
 
 **Methods on `YoutubeMusicPlayerService` to control the player :**
 
