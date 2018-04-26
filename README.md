@@ -9,7 +9,7 @@ Angular5 module. Create a music player with youtube links and control it.
 
 3. `import { YoutubeMusicPlayerModule } from 'youtube-music-player';` in your module
 
-4. Add it to the imports of your @NgModule `@NgModule({[...], imports: [[...], YoutubeMusicPlayerModule]`, [...]})`
+4. Add it to the imports of your @NgModule `@NgModule({[...], imports: [[...], YoutubeMusicPlayerModule], [...]})`
 
 5. Integrate the youtube music player `<app-youtube-music-player [playlist]="myPlaylist"></app-youtube-music-player>` in your HTML
 
@@ -48,3 +48,6 @@ Example :
 `public pause()` : pause the playlist
 
 `urlsToIds(playlist: string[])` : converts an array of youtube links to an array of youtube video ids
+
+Author : Sebastien S.
+Github repository : https://github.com/neoski/youtube-music-player
