@@ -54,7 +54,7 @@ Example :
 
 **Notes :**
 
-If you have troubles with the player because it stays in a loading state. 
+If you have troubles with the player because it stays in a loading state :
 
 1. Make sure you have correctly included the youtube API `<script src="https://www.youtube.com/iframe_api"></script>` in your `index.html` 
 
