@@ -12,6 +12,14 @@ class YoutubeMusicPlayerService {
         this.errorSub = new BehaviorSubject(0);
         this.playSub = new BehaviorSubject(false);
         this.pauseSub = new BehaviorSubject(false);
+        this.readySub = new BehaviorSubject(false);
+        this.scriptLoaded = false;
+    }
+    /**
+     * @return {?}
+     */
+    getReadySub() {
+        return this.readySub;
     }
     /**
      * @return {?}
@@ -89,6 +97,36 @@ class YoutubeMusicPlayerService {
         });
         return playlist;
     }
+    /**
+     * @return {?}
+     */
+    isScriptLoaded() {
+        return this.scriptLoaded;
+    }
+    /**
+     * @param {?=} value
+     * @return {?}
+     */
+    scriptIsLoaded(value = /** @type {?} */ (true)) {
+        this.scriptLoaded = true;
+    }
+    /**
+     * @return {?}
+     */
+    resetSubscribers() {
+        this.playlistSub.unsubscribe();
+        this.indexSub.unsubscribe();
+        this.errorSub.unsubscribe();
+        this.playSub.unsubscribe();
+        this.pauseSub.unsubscribe();
+        this.readySub.unsubscribe();
+        this.playlistSub = new BehaviorSubject([]);
+        this.indexSub = new BehaviorSubject(0);
+        this.errorSub = new BehaviorSubject(0);
+        this.playSub = new BehaviorSubject(false);
+        this.pauseSub = new BehaviorSubject(false);
+        this.readySub = new BehaviorSubject(false);
+    }
 }
 YoutubeMusicPlayerService.decorators = [
     { type: Injectable },
@@ -106,91 +144,109 @@ class YoutubeMusicPlayerComponent {
      */
     constructor(ympService) {
         this.ympService = ympService;
+        this.player = /** @type {?} */ (null);
         this.durationInterval = /** @type {?} */ (null);
         this.playlist = /** @type {?} */ ([]);
         this.autoplay = 0;
         this.index = 0;
+        this.youtubeApiLink = 'https://www.youtube.com/iframe_api';
+    }
+    /**
+     * @return {?}
+     */
+    loadScript() {
+        const /** @type {?} */ node = document.createElement('script');
+        node.src = this.youtubeApiLink;
+        node.type = 'text/javascript';
+        document.getElementsByTagName('head')[0].appendChild(node);
     }
     /**
      * @return {?}
      */
     ngOnInit() {
-        (/** @type {?} */ (window))['onYouTubeIframeAPIReady'] = () => {
-            this.player = new YT.Player('youtubeVideo', {
-                height: '0',
-                width: '0',
-                playerVars: { 'autoplay': 1, 'controls': 0, 'autohide': 0, 'wmode': 'opaque' },
-                events: {
-                    'onReady': () => {
-                        this.player.setVolume(50);
-                        if (this.index !== 0) {
-                            this.ympService.setIndex(this.index);
-                        }
-                        this.ympService.getIndexSub().subscribe((index) => {
-                            this.index = index;
-                            if (this.player.getPlayerState() !== 5) {
-                                // if player has been launched
-                                this.startNewVideo(); // start at new index
-                            }
-                        });
-                        if (this.playlist !== []) {
-                            this.ympService.setPlaylist(this.playlist);
-                        }
-                        this.ympService.getPlaylistSub().subscribe((playlist) => {
-                            this.playlist = playlist;
-                            if (!this.autoplay) {
-                                this.showButtonsAfterLoad(true);
-                            }
-                            else {
-                                this.startNewVideo();
-                            }
-                        });
-                        this.ympService.getPlaySub().subscribe((val) => {
-                            if (val) {
-                                this.playVideo();
-                            }
-                        });
-                        this.ympService.getPauseSub().subscribe((val) => {
-                            if (val) {
-                                this.pauseVideo();
-                            }
-                        });
-                    },
-                    'onStateChange': (e) => {
-                        if (e.data === 0) {
-                            // if video finished
-                            this.nextSong();
-                        }
-                        if (e.data === 1) {
-                            // if video just started or played after pause
-                            const /** @type {?} */ videoData = this.player.getVideoData();
-                            this.ympTitle.nativeElement.innerHTML =
-                                (videoData.title.length > 30 ? videoData.title.substr(0, 27) + '...' : videoData.title);
-                            this.showButtonsAfterLoad();
-                        }
-                        if (e.data === 2) {
-                            this.showButtonsAfterLoad(true);
-                        }
-                    },
-                    'onError': (e) => {
-                        this.ympLoading.nativeElement.className = 'hidden';
-                        this.ympError.nativeElement.className = '';
-                        this.ympError.nativeElement.innerHTML =
-                            ('Error at loading video (index ' +
-                                this.index + ')');
-                        this.ympService.setError(e.data);
-                    }
-                }
-            });
-        };
+        if (!this.ympService.isScriptLoaded()) {
+            // load script once
+            this.loadScript();
+            this.ympService.scriptIsLoaded();
+            (/** @type {?} */ (window)).onYouTubeIframeAPIReady = () => {
+                this.createPlayer();
+            };
+        }
+        else {
+            this.createPlayer();
+        }
     }
     /**
      * @return {?}
      */
-    ngOnDestroy() {
-        if (this.durationInterval) {
-            clearInterval(this.durationInterval);
-        }
+    createPlayer() {
+        this.player = new YT.Player('youtubeVideo', {
+            height: '0',
+            width: '0',
+            playerVars: { 'autoplay': 1, 'controls': 0, 'autohide': 0 },
+            events: {
+                'onReady': () => {
+                    this.player.setVolume(50);
+                    if (this.index !== 0) {
+                        this.ympService.setIndex(this.index);
+                    }
+                    this.ympService.getIndexSub().subscribe((index) => {
+                        this.index = index;
+                        if (this.player.getPlayerState() !== 5) {
+                            // if player has been launched
+                            this.startNewVideo(); // start at new index
+                        }
+                    });
+                    if (this.playlist !== []) {
+                        this.ympService.setPlaylist(this.playlist);
+                    }
+                    this.ympService.getPlaylistSub().subscribe((playlist) => {
+                        this.playlist = playlist;
+                        if (!this.autoplay) {
+                            this.showButtonsAfterLoad(true);
+                        }
+                        else {
+                            this.startNewVideo();
+                        }
+                    });
+                    this.ympService.getPlaySub().subscribe((val) => {
+                        if (val && this.player) {
+                            this.playVideo();
+                        }
+                    });
+                    this.ympService.getPauseSub().subscribe((val) => {
+                        if (val) {
+                            this.pauseVideo();
+                        }
+                    });
+                    this.ympService.getReadySub().next(true);
+                },
+                'onStateChange': (e) => {
+                    if (e.data === 0) {
+                        // if video finished
+                        this.nextSong();
+                    }
+                    if (e.data === 1) {
+                        // if video just started or played after pause
+                        const /** @type {?} */ videoData = this.player.getVideoData();
+                        this.ympTitle.nativeElement.innerHTML =
+                            (videoData.title.length > 30 ? videoData.title.substr(0, 27) + '...' : videoData.title);
+                        this.showButtonsAfterLoad();
+                    }
+                    if (e.data === 2) {
+                        this.showButtonsAfterLoad(true);
+                    }
+                },
+                'onError': (e) => {
+                    this.ympLoading.nativeElement.className = 'hidden';
+                    this.ympError.nativeElement.className = '';
+                    this.ympError.nativeElement.innerHTML =
+                        ('Error at loading video (index ' +
+                            this.index + ')');
+                    this.ympService.setError(e.data);
+                }
+            }
+        });
     }
     /**
      * @return {?}
@@ -244,11 +300,11 @@ class YoutubeMusicPlayerComponent {
         this.ympBuffered.nativeElement.style.width = buffered * 100 + '%';
     }
     /**
-     * @param {?} $event
+     * @param {?} e
      * @return {?}
      */
-    changePosition($event) {
-        const /** @type {?} */ positionleft = ($event.offsetX * 100) / this.ympBar.nativeElement.offsetWidth;
+    changePosition(e) {
+        const /** @type {?} */ positionleft = (e.offsetX * 100) / this.ympBar.nativeElement.offsetWidth;
         this.player.seekTo((positionleft * this.duration) / 100, true);
         this.updateBar();
     }
@@ -268,7 +324,7 @@ class YoutubeMusicPlayerComponent {
             //if paused
             this.player.playVideo();
         }
-        else {
+        else if (this.player) {
             this.startNewVideo();
         }
     }
@@ -304,13 +360,24 @@ class YoutubeMusicPlayerComponent {
         else {
             this.buttonPause.nativeElement.className = '';
             this.buttonPlay.nativeElement.className = 'hidden';
-            if (!this.durationInterval) {
-                this.durationInterval = setInterval(() => this.updateBar(), 100);
-            }
         }
         this.ympLoading.nativeElement.className = 'hidden';
         this.ympPrevious.nativeElement.className = '';
         this.ympNext.nativeElement.className = '';
+        if (!this.durationInterval) {
+            this.durationInterval = setInterval(() => this.updateBar(), 100);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.player.destroy();
+        this.ympService.resetSubscribers();
+        if (this.durationInterval) {
+            clearInterval(this.durationInterval);
+            this.durationInterval = null;
+        }
     }
 }
 YoutubeMusicPlayerComponent.decorators = [
@@ -339,7 +406,8 @@ YoutubeMusicPlayerComponent.decorators = [
       <input type="range" id="soundBar" #soundBar (change)=setVolume()/>
       <div class="hidden" id="youtubeVideo"></div>
   </div>
-</div>`,
+</div>
+`,
                 styles: [`div#ymp .hidden{visibility:hidden;display:none!important}div#ymp{font-family:"Trebuchet MS",Helvetica,sans-serif;width:100%;height:17px;background-color:#000;color:#fff;line-height:14px;font-size:10px;padding-bottom:4px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex}div#ymp div#ympNext,div#ymp div#ympPrevious{position:relative;top:2px;font-size:12px;cursor:pointer;font-weight:700;padding-left:4px}div#ympLeftPart{padding-top:3px;padding-left:2px;display:-webkit-box;display:-ms-flexbox;display:flex}div#ympRightPart{padding-left:10px;padding-right:10px;float:right;display:-webkit-box;display:-ms-flexbox;display:flex}div#ymp #ympPlay div{font-size:10px;position:relative;top:0;cursor:pointer;padding-top:1px}div#ymp #ympPlay{margin-left:5px;display:inline-block;width:9px}div#ymp #ympLoading{position:relative;top:2px;left:14px}div#ymp #ympLoading img{height:15px;width:15px}div#ymp div#ympError,div#ymp div#ympTitle{margin-left:5px;margin-right:5px;margin-top:1px;display:inline-block;white-space:nowrap}div#ympBar{position:relative;width:100%;border:1px solid #fff;height:5px;background-color:#333;overflow:hidden;margin-top:6.5px;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex}div#ymp div.ympBuffered{z-index:1;position:absolute;background-color:#666;width:0%;height:5px}div#ymp #ympProgress{z-index:2;position:absolute;width:2px;height:4px;border:1px solid #fff;background-color:#fff}div#ymp #soundBar{z-index:1;position:relative;display:inline-block;width:100px;background-color:#000;overflow:hidden;top:2px;margin-left:5px}div#ymp #soundValue{z-index:2;left:50%;position:absolute;width:3px;height:4px;border:1px solid #fff;border-radius:50%;background-color:#fff}div#ymp div#ympTime{padding-top:4px;padding-right:4px}`]
             },] },
 ];
@@ -364,6 +432,7 @@ YoutubeMusicPlayerComponent.propDecorators = {
     "playlist": [{ type: Input },],
     "autoplay": [{ type: Input },],
     "index": [{ type: Input },],
+    "youtubeApiLink": [{ type: Input },],
 };
 
 /**

@@ -4,13 +4,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class YoutubeMusicPlayerService {
 
-  public playlistSub = new BehaviorSubject<Array<string>>([]);
-  public indexSub = new BehaviorSubject<number>(0);
-  public errorSub = new BehaviorSubject<number>(0);
-  public playSub = new BehaviorSubject<boolean>(false);
-  public pauseSub = new BehaviorSubject<boolean>(false);
+  private playlistSub = new BehaviorSubject<Array<string>>([]);
+  private indexSub = new BehaviorSubject<number>(0);
+  private errorSub = new BehaviorSubject<number>(0);
+  private playSub = new BehaviorSubject<boolean>(false);
+  private pauseSub = new BehaviorSubject<boolean>(false);
+  private readySub = new BehaviorSubject<boolean>(false);
+  private scriptLoaded = false;
   constructor() { }
 
+  public getReadySub() {
+    return this.readySub;
+  }
 
   public getErrorSub() {
     return this.errorSub;
@@ -60,5 +65,28 @@ export class YoutubeMusicPlayerService {
       }
     });
     return playlist;
+  }
+
+  public isScriptLoaded() {
+    return this.scriptLoaded;
+  }
+
+  public scriptIsLoaded(value = true as boolean) {
+    this.scriptLoaded = true;
+  }
+
+  public resetSubscribers() {
+    this.playlistSub.unsubscribe();
+    this.indexSub.unsubscribe();
+    this.errorSub.unsubscribe();
+    this.playSub.unsubscribe();
+    this.pauseSub.unsubscribe();
+    this.readySub.unsubscribe();
+    this.playlistSub = new BehaviorSubject<Array<string>>([]);
+    this.indexSub = new BehaviorSubject<number>(0);
+    this.errorSub = new BehaviorSubject<number>(0);
+    this.playSub = new BehaviorSubject<boolean>(false);
+    this.pauseSub = new BehaviorSubject<boolean>(false);
+    this.readySub = new BehaviorSubject<boolean>(false);
   }
 }

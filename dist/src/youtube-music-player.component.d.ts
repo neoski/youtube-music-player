@@ -21,18 +21,21 @@ export declare class YoutubeMusicPlayerComponent implements OnInit {
     playlist: string[];
     autoplay: number;
     index: number;
+    youtubeApiLink: string;
     constructor(ympService: YoutubeMusicPlayerService);
+    loadScript(): void;
     ngOnInit(): void;
-    ngOnDestroy(): void;
+    createPlayer(): void;
     setVolume(): void;
     nextSong(): void;
     previousSong(): void;
     updateTime(current: number, total: number): void;
     updateBar(): void;
-    changePosition($event: any): void;
+    changePosition(e: any): void;
     startNewVideo(): void;
     playVideo(): void;
     pauseVideo(): void;
     hideButtonsForLoad(): void;
     showButtonsAfterLoad(pause?: boolean): void;
+    ngOnDestroy(): void;
 }

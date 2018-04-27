@@ -1,11 +1,14 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export declare class YoutubeMusicPlayerService {
-    playlistSub: BehaviorSubject<string[]>;
-    indexSub: BehaviorSubject<number>;
-    errorSub: BehaviorSubject<number>;
-    playSub: BehaviorSubject<boolean>;
-    pauseSub: BehaviorSubject<boolean>;
+    private playlistSub;
+    private indexSub;
+    private errorSub;
+    private playSub;
+    private pauseSub;
+    private readySub;
+    private scriptLoaded;
     constructor();
+    getReadySub(): BehaviorSubject<boolean>;
     getErrorSub(): BehaviorSubject<number>;
     setError(data: number): void;
     setPlaylist(playlist: string[]): void;
@@ -17,4 +20,7 @@ export declare class YoutubeMusicPlayerService {
     play(): void;
     pause(): void;
     urlsToIds(playlist: string[]): string[];
+    isScriptLoaded(): boolean;
+    scriptIsLoaded(value?: boolean): void;
+    resetSubscribers(): void;
 }

@@ -1,14 +1,14 @@
 {
-  "name": "youtube-music-player",
   "author": {
     "name": "Sebastien S."
   },
   "bugs": {
     "url": "https://github.com/neoski/youtube-music-player/issues"
   },
-  "description": "Angular5 module. Insert youtube links to a music player and control it.",
+  "deprecated": false,
+  "description": "Convert youtube links to a music player and control it. Angular5 module.",
+  "es2015": "esm2015/youtube-music-player.js",
   "homepage": "https://github.com/neoski/youtube-music-player",
-  "version": "0.1.0",
   "keywords": [
     "angular",
     "angular2",
@@ -23,16 +23,16 @@
     "component"
   ],
   "license": "MIT",
-  "private": false,
   "main": "bundles/youtube-music-player.umd.js",
   "module": "esm5/youtube-music-player.js",
-  "es2015": "esm2015/youtube-music-player.js",
-  "typings": "youtube-music-player.d.ts",
-  "metadata": "youtube-music-player.metadata.json",
+  "name": "youtube-music-player",
   "peerDependencies": {
     "@angular/core": "^2.4.0 || ^4.0.0 || ^5.2.10",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.0.0"
   },
-  "deprecated": false
+  "private": false,
+  "typings": "youtube-music-player.d.ts",
+  "metadata": "youtube-music-player.metadata.json",
+  "version": "0.2.0"
 }
