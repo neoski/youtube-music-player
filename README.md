@@ -1,7 +1,7 @@
 # youtube-music-player
 Create a music player with youtube links and control it (Angular5 module).
 
-<img src="https://github.com/neoski/youtube-music-player/blob/master/ymp.png?raw=true"/>
+<img src="https://github.com/neoski/youtube-music-player/blob/master/ymp.png"/>
 
 **Usage :**
 
@@ -60,7 +60,7 @@ If you have troubles with the player because it stays in a loading state :
 
 1. Make sure you have correctly included the youtube API `<script src="https://www.youtube.com/iframe_api"></script>` in your `index.html` 
 
-2. Reload manually the page.
+2. Reload manually the page
 
 Author : Sebastien S.
 
