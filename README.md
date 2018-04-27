@@ -64,6 +64,7 @@ Add to your component HTML :
 Then in the component class method (with `private ympService : YoutubeMusicPlayerService` on the constructor's params) :
 
 `
+
 const youtubeLinks = ['https://www.youtube.com/watch?v=cTn288M5Mak', 'https://www.youtube.com/watch?v=3dm_5qWWDV8'];
 
 const playlist = this.ympService.urlsToIds(youtubeLinks); // extract the ids from the youtube links
@@ -77,7 +78,9 @@ this.ympService.getReadySub().subscribe((val) => {
        this.ympService.play();
        
     }
+
 });
+
 `
 
 
