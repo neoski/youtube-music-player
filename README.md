@@ -59,7 +59,7 @@ Example :
 
 If you have troubles with the player :
 
-- Make sure you interact with the player when it is ready, subscribe on `getReadySub()` and make sure it holds the value `true`.
+- Make sure you interact with the player when it is ready, subscribe on `getReadySub()` and make sure it holds the value `true` before any interaction with the player.
 
 - Make sure you are not trying to play an empty playlist.
 
