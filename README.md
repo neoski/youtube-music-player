@@ -65,7 +65,7 @@ Then in the component class method (with `private ympService : YoutubeMusicPlaye
 
 ```
 const youtubeLinks = ['https://www.youtube.com/watch?v=cTn288M5Mak', 
-'https://www.youtube.com/watch?v=3dm_5qWWDV8'];
+                      'https://www.youtube.com/watch?v=3dm_5qWWDV8'];
 
 const playlist = this.ympService.urlsToIds(youtubeLinks); // extract the ids from the youtube links
 
