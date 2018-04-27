@@ -70,13 +70,12 @@ const playlist = this.ympService.urlsToIds(youtubeLinks); // extract the ids fro
 this.ympService.getReadySub().subscribe((val) => {
 
     if (val === true) { // when player is ready
-
+    
        this.ympService.setPlaylist(playlist);
-
+       
        this.ympService.play();
-
+       
     }
-
 });`
 
 
