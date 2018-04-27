@@ -55,6 +55,26 @@ Example :
 
 `urlsToIds(playlist: string[])` : converts an array of youtube links to an array of youtube video ids
 
+**Example :**
+
+Add to your component HTML :
+
+`<app-youtube-music-player></app-youtube-music-player>`
+
+Then in the component class method (with `private ympService : YoutubeMusicPlayerService` on the constructor's params) :
+
+`const youtubeLinks = ['https://www.youtube.com/watch?v=cTn288M5Mak', 'https://www.youtube.com/watch?v=3dm_5qWWDV8'];
+const playlist = this.ympService.urlsToIds(youtubeLinks); // extract the ids from the youtube links
+this.ympService.getReadySub().subscribe((val) => {
+    if (val === true) { // when player is ready
+       this.ympService.setPlaylist(playlist);
+       this.ympService.play();
+    }
+});`
+
+
+
+
 **Notes :**
 
 If you have troubles with the player :
